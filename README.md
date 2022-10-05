@@ -1,1 +1,1 @@
-# Blog-Sample
+# That NAV Guy Blog Sample Code
