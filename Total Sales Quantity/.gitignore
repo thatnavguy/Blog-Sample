@@ -1,0 +1,7 @@
+*.app
+*.zip
+**/rad.json
+.snapshots/
+**/.snapshots/*
+**/.alcache/*
+*/launch.json

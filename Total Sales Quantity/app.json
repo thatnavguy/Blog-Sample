@@ -1,0 +1,29 @@
+{
+  "id": "5f0a5d60-7c02-4f27-9614-3eb439c66ef7",
+  "name": "Total Sales Quantity",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Total Quantity on Sales Order page.",
+  "description": "Total Quantity on Sales Order page.",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "19.0.0.0",
+  "application": "19.0.0.0",
+  "idRanges": [
+    {
+      "from": 60001,
+      "to": 60010
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "8.0"
+}
