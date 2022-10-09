@@ -1,0 +1,29 @@
+{
+  "id": "4860340c-1f52-42e3-90f0-aa10dda2989f",
+  "name": "Web Service Access Key Removal",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Web Service Access Key Removal.",
+  "description": "Web Service Access Key Removal.",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60011,
+      "to": 60020
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}

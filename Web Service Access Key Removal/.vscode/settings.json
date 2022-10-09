@@ -1,0 +1,24 @@
+{
+    "CRS.ObjectNameSuffix": "_TNG",
+    "CRS.OnSaveAlFileAction": "Reorganize",
+    "CRS.DisableDefaultAlSnippets": true,
+    "CRS.RenameWithGit": true,
+    "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.RemoveSuffixFromFilename": true,
+    "CRS.RemoveUnderscoreFromFilename": true,
+    "al.enableCodeAnalysis": true,
+    "al.codeAnalyzers": [
+        "${CodeCop}",
+        "${PerTenantExtensionCop}"
+    ],
+    "files.exclude": {
+        "**/.snapshots": true,
+        ".vscode/rad.json": true,
+        ".vscode/al.code-snippets": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.autoSave": "off"
+}
