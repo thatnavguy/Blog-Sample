@@ -20,7 +20,7 @@ page 60011 "Web Service Key Removal_TNG"
             {
                 ApplicationArea = All;
                 Caption = 'Remove All Keys';
-                ToolTip = 'Remova all existing web service access keys.';
+                ToolTip = 'Remove all existing web service access keys.';
                 trigger OnAction()
                 var
                     User: Record User;
