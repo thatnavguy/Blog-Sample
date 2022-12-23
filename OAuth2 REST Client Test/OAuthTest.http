@@ -1,0 +1,26 @@
+###OAuth Test with REST Client
+@tenantId = c98f6409-fbae-45a4-8317-6f3f50006
+@clientId = d4e5a372-b526-45ef-b3c5-e5ddcd93e
+@clientSecret = dAe8Q~Jg04E9fziJZ5tpM5uz8qq9E
+@baseUrl = https://api.businesscentral.dynamics.com
+@scope = {{baseUrl}}/.default
+@bcEnvironmentName = Sandbox
+@baseAPIUrl = {{baseUrl}}/v2.0/{{bcEnvironmentName}}/api/v2.0
+
+### Get Authorization Token
+# @name auth
+POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1
+Content-type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+&client_id={{clientId}}
+&client_secret={{clientSecret}}
+&scope={{scope}}
+
+### Use Authorization Token
+@accessHeader = Bearer {{auth.response.body.$.access_token}}
+
+### Get Companies
+# @name GetCompanies
+GET {{baseAPIUrl}}/companies HTTP/1.1
+Authorization: {{accessHeader}}
