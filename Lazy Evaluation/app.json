@@ -1,0 +1,29 @@
+{
+  "id": "717e6002-6d67-4eb1-bd54-47697d16e127",
+  "name": "Lazy Evaluation",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Lazy Evaluation",
+  "description": "Test Lazy Evaluation",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60031,
+      "to": 60040
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
