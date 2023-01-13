@@ -17,6 +17,10 @@
         "connections_office365": {
             "defaultValue": "office365",
             "type": "String"
+        },
+        "emailaddress": {
+            "defaultValue": "xxx@thatnavguy.com",
+            "type": "string"
         }
     },
     "variables": {},
@@ -44,7 +48,7 @@
                             "type": "String"
                         },
                         "emailAddress": {
-                            "defaultValue": "thatnavguy@thatnavguy.com",
+                            "defaultValue": "[parameters('emailaddress')]",
                             "type": "String"
                         },
                         "expiredWithinDays": {
