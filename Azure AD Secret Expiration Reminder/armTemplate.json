@@ -1,0 +1,880 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "logic_app_name": {
+            "defaultValue": "app-registration-monitoring",
+            "type": "String"
+        },
+        "connections_azuretables": {
+            "defaultValue": "azuretables",
+            "type": "String"
+        },
+        "connections_keyvault": {
+            "defaultValue": "keyvault",
+            "type": "String"
+        },
+        "connections_office365": {
+            "defaultValue": "office365",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('logic_app_name')]",
+            "location": "australiaeast",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "appEndPoint": {
+                            "defaultValue": "https://ms.portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Credentials/appId/currAppId/isMSAApp/",
+                            "type": "String"
+                        },
+                        "emailAddress": {
+                            "defaultValue": "thatnavguy@thatnavguy.com",
+                            "type": "String"
+                        },
+                        "expiredWithinDays": {
+                            "defaultValue": 30,
+                            "type": "Int"
+                        },
+                        "keysEndpoint": {
+                            "defaultValue": "https://graph.microsoft.com/v1.0/applications?$select=id,appId,displayName,passwordCredentials,keyCredentials&$top=999",
+                            "type": "String"
+                        },
+                        "redStyle": {
+                            "defaultValue": "style=\"color: red;\"",
+                            "type": "String"
+                        },
+                        "redStyleExpiredWithinDays": {
+                            "defaultValue": 5,
+                            "type": "Int"
+                        },
+                        "tableStyle": {
+                            "defaultValue": "<style> table, th, td {   border-collapse: collapse;font-family: Helvetica; padding: 5px; border: 1px solid black; } </style>",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": 1
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Check_expiredAppCount": {
+                            "actions": {
+                                "Close_htmlBody_tags": {
+                                    "runAfter": {},
+                                    "type": "AppendToStringVariable",
+                                    "inputs": {
+                                        "name": "htmlBody",
+                                        "value": "</tbody></table>"
+                                    }
+                                },
+                                "Send_Email_Notifications": {
+                                    "runAfter": {
+                                        "Close_htmlBody_tags": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "Body": "<p>@{parameters('tableStyle')}<br>\n<br>\n@{variables('htmlBody')}</p>",
+                                            "Importance": "High",
+                                            "Subject": "Near Expired Secrets and Certificates",
+                                            "To": "@parameters('emailAddress')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['office365']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/v2/Mail"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Until": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "greater": [
+                                            "@variables('expiredAppCount')",
+                                            0
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "Client-id": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['keyvault']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/secrets/@{encodeURIComponent('AppMonitoring-Client-Id')}/value"
+                            },
+                            "runtimeConfiguration": {
+                                "secureData": {
+                                    "properties": [
+                                        "inputs",
+                                        "outputs"
+                                    ]
+                                }
+                            }
+                        },
+                        "Client-secret": {
+                            "runAfter": {
+                                "Client-id": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['keyvault']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/secrets/@{encodeURIComponent('AppMonitoring-Client-Secret')}/value"
+                            },
+                            "runtimeConfiguration": {
+                                "secureData": {
+                                    "properties": [
+                                        "inputs",
+                                        "outputs"
+                                    ]
+                                }
+                            }
+                        },
+                        "Client-tenantId": {
+                            "runAfter": {
+                                "Client-secret": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['keyvault']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/secrets/@{encodeURIComponent('AppMonitoring-Tenant-Id')}/value"
+                            }
+                        },
+                        "Get_Future_Date": {
+                            "runAfter": {
+                                "Initialize_nextLink": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Expression",
+                            "kind": "GetFutureTime",
+                            "inputs": {
+                                "interval": "@parameters('expiredWithinDays')",
+                                "timeUnit": "Day"
+                            }
+                        },
+                        "Get_Token": {
+                            "runAfter": {
+                                "Client-tenantId": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": "grant_type=client_credentials\n&client_id=@{body('Client-id')?['value']}\n&client_secret=@{body('Client-secret')?['value']}\n&scope=https://graph.microsoft.com/.default",
+                                "headers": {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                },
+                                "method": "POST",
+                                "uri": "https://login.microsoftonline.com/@{body('Client-tenantId')?['value']}/oauth2/v2.0/token"
+                            }
+                        },
+                        "Initialize_appId": {
+                            "runAfter": {
+                                "Initialize_htmlBody": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "AppID",
+                                        "type": "string",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_certificatesKey": {
+                            "runAfter": {
+                                "Initialize_secretsKey": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "certificatesKey",
+                                        "type": "array"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_currentTimeTick": {
+                            "runAfter": {
+                                "Initialize_daysLeft": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "currentTimeTick",
+                                        "type": "integer",
+                                        "value": "@ticks(utcNow())"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_daysLeft": {
+                            "runAfter": {
+                                "Initialize_certificatesKey": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "daysLeft",
+                                        "type": "float",
+                                        "value": 10
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_displayName": {
+                            "runAfter": {
+                                "Initialize_appId": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "displayName",
+                                        "type": "string",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_endTimeTick": {
+                            "runAfter": {
+                                "Initialize_currentTimeTick": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "endTimeTick",
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_expiredAppCount": {
+                            "runAfter": {
+                                "Initialize_endTimeTick": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "expiredAppCount",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_htmlBody": {
+                            "runAfter": {
+                                "Parse_JSON_-_Get_Token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "htmlBody",
+                                        "type": "string",
+                                        "value": "<table><thead><th>Type</th><th>Application ID</th><th>Display Name</th><th> Key Id</th><th>Expiration Date</th><th>Days Left</th></thead><tbody>"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_nextLink": {
+                            "runAfter": {
+                                "Initialize_expiredAppCount": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "nextLink",
+                                        "type": "string",
+                                        "value": "@parameters('keysEndpoint')"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_secretsKey": {
+                            "runAfter": {
+                                "Initialize_displayName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "secretsKey",
+                                        "type": "array"
+                                    }
+                                ]
+                            }
+                        },
+                        "Parse_JSON_-_Get_Token": {
+                            "runAfter": {
+                                "Get_Token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@body('Get_Token')",
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer"
+                                        },
+                                        "ext_expires_in": {
+                                            "type": "integer"
+                                        },
+                                        "token_type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "runtimeConfiguration": {
+                                "secureData": {
+                                    "properties": [
+                                        "inputs"
+                                    ]
+                                }
+                            }
+                        },
+                        "Until": {
+                            "actions": {
+                                "Foreach_-_Applications": {
+                                    "foreach": "@body('Parse_JSON_-_Applications')?['value']",
+                                    "actions": {
+                                        "Get_Monitored_App": {
+                                            "runAfter": {
+                                                "Set_variable_-_displayName": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azuretables']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/Tables/@{encodeURIComponent('AppRegistrationMonitoring')}/entities",
+                                                "queries": {
+                                                    "$filter": "PartitionKey eq '@{variables('AppID')}'"
+                                                }
+                                            }
+                                        },
+                                        "If_App_Exist_in_Monitored_App": {
+                                            "actions": {
+                                                "For_each_certificatesKey": {
+                                                    "foreach": "@items('Foreach_-_Applications')?['keyCredentials']",
+                                                    "actions": {
+                                                        "Check_EndDate_certificatesKey": {
+                                                            "actions": {
+                                                                "Append_htmlBody_certificatesKey": {
+                                                                    "runAfter": {
+                                                                        "Increment_expiredAppCount_certificatesKey": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "AppendToStringVariable",
+                                                                    "inputs": {
+                                                                        "name": "htmlBody",
+                                                                        "value": "<tr><td >Certificate</td><td ><a href=\"@{replace(parameters('appEndPoint'),'currAppId',variables('AppID'))}\">@{variables('appId')}</a></td><td >@{variables('displayName')}</td><td >@{item()?['keyId']}</td><td >@{formatDateTime(item()?['endDateTime'], 'g')}<td @{if(lessOrEquals(variables('daysLeft'), parameters('redStyleExpiredWithinDays')),parameters('redStyle'),'')}>@{variables('daysLeft')} </td></tr>"
+                                                                    }
+                                                                },
+                                                                "Increment_expiredAppCount_certificatesKey": {
+                                                                    "runAfter": {
+                                                                        "Set_daysTillExpiration_certificatesKey": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "IncrementVariable",
+                                                                    "inputs": {
+                                                                        "name": "expiredAppCount",
+                                                                        "value": 1
+                                                                    }
+                                                                },
+                                                                "Set_daysTillExpiration_certificatesKey": {
+                                                                    "runAfter": {
+                                                                        "Set_endTimeTick_certificatesKey": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "SetVariable",
+                                                                    "inputs": {
+                                                                        "name": "daysLeft",
+                                                                        "value": "@div(div(div(mul(sub(variables('endTimeTick'),variables('currentTimeTick')),100),1000000000) , 3600), 24)"
+                                                                    }
+                                                                },
+                                                                "Set_endTimeTick_certificatesKey": {
+                                                                    "runAfter": {},
+                                                                    "type": "SetVariable",
+                                                                    "inputs": {
+                                                                        "name": "endTimeTick",
+                                                                        "value": "@{ticks(item()?['endDateTime'])}"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "runAfter": {},
+                                                            "expression": {
+                                                                "and": [
+                                                                    {
+                                                                        "greaterOrEquals": [
+                                                                            "@body('Get_Future_Date')",
+                                                                            "@items('For_each_certificatesKey')?['endDateTime']"
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "type": "If"
+                                                        }
+                                                    },
+                                                    "runAfter": {
+                                                        "For_each_secretsKey": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "Foreach"
+                                                },
+                                                "For_each_secretsKey": {
+                                                    "foreach": "@items('Foreach_-_Applications')?['passwordCredentials']",
+                                                    "actions": {
+                                                        "Check_EndDate_secretsKey": {
+                                                            "actions": {
+                                                                "Append_htmlBody_secretsKey": {
+                                                                    "runAfter": {
+                                                                        "Increment_expiredAppCount_secretsKey": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "AppendToStringVariable",
+                                                                    "inputs": {
+                                                                        "name": "htmlBody",
+                                                                        "value": "<tr><td>Secret</td><td><a href=\"@{replace(parameters('appEndPoint'), 'currAppId', variables('AppID'))}\">@{variables('appId')}</a></td><td>@{variables('displayName')}</td><td>@{item()?['keyId']}</td><td>@{formatDateTime(item()?['endDateTime'], 'g')}</td><td @{if(lessOrEquals(variables('daysLeft'), parameters('redStyleExpiredWithinDays')),parameters('redStyle'),'')}>@{variables('daysLeft')} </td></tr>"
+                                                                    }
+                                                                },
+                                                                "Increment_expiredAppCount_secretsKey": {
+                                                                    "runAfter": {
+                                                                        "Set_daysTillExpiration_secretsKey": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "IncrementVariable",
+                                                                    "inputs": {
+                                                                        "name": "expiredAppCount",
+                                                                        "value": 1
+                                                                    }
+                                                                },
+                                                                "Set_daysTillExpiration_secretsKey": {
+                                                                    "runAfter": {
+                                                                        "Set_endTimeTick_secretKey": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "SetVariable",
+                                                                    "inputs": {
+                                                                        "name": "daysLeft",
+                                                                        "value": "@div(div(div(mul(sub(variables('endTimeTick'),variables('currentTimeTick')),100),1000000000) , 3600), 24)"
+                                                                    }
+                                                                },
+                                                                "Set_endTimeTick_secretKey": {
+                                                                    "runAfter": {},
+                                                                    "type": "SetVariable",
+                                                                    "inputs": {
+                                                                        "name": "endTimeTick",
+                                                                        "value": "@ticks(item()?['endDateTime'])"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "runAfter": {},
+                                                            "expression": {
+                                                                "and": [
+                                                                    {
+                                                                        "greaterOrEquals": [
+                                                                            "@body('Get_Future_Date')",
+                                                                            "@items('For_each_secretsKey')?['endDateTime']"
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "type": "If"
+                                                        }
+                                                    },
+                                                    "runAfter": {},
+                                                    "type": "Foreach"
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "Get_Monitored_App": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "greater": [
+                                                            "@length(body('Get_Monitored_App')?['value'])",
+                                                            0
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        },
+                                        "Set_variable_-_appId": {
+                                            "runAfter": {},
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "AppID",
+                                                "value": "@{items('Foreach_-_Applications')?['appId']}"
+                                            }
+                                        },
+                                        "Set_variable_-_displayName": {
+                                            "runAfter": {
+                                                "Set_variable_-_appId": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "displayName",
+                                                "value": "@{items('Foreach_-_Applications')?['displayName']}"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Parse_JSON_-_Applications": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach",
+                                    "runtimeConfiguration": {
+                                        "concurrency": {
+                                            "repetitions": 1
+                                        }
+                                    }
+                                },
+                                "HTTP_-_Get_Applications": {
+                                    "runAfter": {},
+                                    "type": "Http",
+                                    "inputs": {
+                                        "headers": {
+                                            "Authorization": "Bearer @{body('Parse_JSON_-_Get_Token')?['access_token']}"
+                                        },
+                                        "method": "GET",
+                                        "uri": "@variables('nextLink')"
+                                    }
+                                },
+                                "Parse_JSON_-_Applications": {
+                                    "runAfter": {
+                                        "HTTP_-_Get_Applications": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('HTTP_-_Get_Applications')",
+                                        "schema": {
+                                            "properties": {
+                                                "properties": {
+                                                    "properties": {
+                                                        "@@odata.context": {
+                                                            "properties": {
+                                                                "type": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "value": {
+                                                            "properties": {
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "properties": {
+                                                                            "properties": {
+                                                                                "@@odata.id": {
+                                                                                    "properties": {
+                                                                                        "type": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                },
+                                                                                "appId": {
+                                                                                    "properties": {
+                                                                                        "type": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                },
+                                                                                "certificatesKey": {
+                                                                                    "properties": {
+                                                                                        "type": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                },
+                                                                                "displayName": {
+                                                                                    "properties": {
+                                                                                        "type": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                },
+                                                                                "secretsKeys": {
+                                                                                    "properties": {
+                                                                                        "items": {
+                                                                                            "properties": {
+                                                                                                "properties": {
+                                                                                                    "properties": {
+                                                                                                        "customKeyIdentifier": {
+                                                                                                            "properties": {},
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "displayName": {
+                                                                                                            "properties": {
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "endDateTime": {
+                                                                                                            "properties": {
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "hint": {
+                                                                                                            "properties": {
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "keyId": {
+                                                                                                            "properties": {
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "secretText": {
+                                                                                                            "properties": {},
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "startDateTime": {
+                                                                                                            "properties": {
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "type": "object"
+                                                                                                },
+                                                                                                "required": {
+                                                                                                    "items": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "type": "array"
+                                                                                                },
+                                                                                                "type": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            },
+                                                                                            "type": "object"
+                                                                                        },
+                                                                                        "type": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                }
+                                                                            },
+                                                                            "type": "object"
+                                                                        },
+                                                                        "required": {
+                                                                            "items": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "type": "array"
+                                                                        },
+                                                                        "type": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                },
+                                                                "type": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Update_nextLink": {
+                                    "runAfter": {
+                                        "Foreach_-_Applications": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "nextLink",
+                                        "value": "@{body('Parse_JSON_-_Applications')?['@odata.nextLink']}"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Get_Future_Date": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": "@not(equals(variables('nextLink'), null))",
+                            "limit": {
+                                "count": 60,
+                                "timeout": "PT1H"
+                            },
+                            "type": "Until"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azuretables": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_azuretables'))]",
+                                "connectionName": "[parameters('connections_azuretables')]",
+                                "id": "[reference(concat('Microsoft.Web/connections/','azuretables'),'2016-06-01').api.id]"
+                            },
+                            "keyvault": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_keyvault'))]",
+                                "connectionName": "[parameters('connections_keyvault')]",
+                                "connectionProperties": {
+                                    "authentication": {
+                                        "type": "ManagedServiceIdentity"
+                                    }
+                                },
+                                "id": "[reference(concat('Microsoft.Web/connections/','keyvault'),'2016-06-01').api.id]"
+                            },
+                            "office365": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_office365'))]",
+                                "connectionName": "[parameters('connections_office365')]",
+                                "id": "[reference(concat('Microsoft.Web/connections/', 'office365'), '2016-06-01').api.id]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
