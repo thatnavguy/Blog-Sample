@@ -1,0 +1,29 @@
+{
+  "id": "86f55975-c18b-4776-814c-90c42bcfc92e",
+  "name": "Interface Test",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Interface",
+  "description": "Test Interface",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60041,
+      "to": 60050
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
