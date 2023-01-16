@@ -1,0 +1,29 @@
+{
+  "id": "312ba683-04a5-429e-afa3-115df229964a",
+  "name": "StringConversionManagement Test",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test StringConversionManagement Codeunit",
+  "description": "Test StringConversionManagement Codeunit",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60031,
+      "to": 60040
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
