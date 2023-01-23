@@ -1,0 +1,29 @@
+{
+  "id": "c33f6800-6536-4275-8d6b-3e019c8fd6a5",
+  "name": "Test Persistent Blob",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Persistent Blob",
+  "description": "Test Persistent Blob",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60061,
+      "to": 60070
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
