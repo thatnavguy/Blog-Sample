@@ -1,0 +1,29 @@
+{
+  "id": "dac362bf-fe8e-419d-88ad-62e0c4059e25",
+  "name": "Duration Test",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Duration",
+  "description": "Test Duration",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60061,
+      "to": 60070
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
