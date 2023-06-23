@@ -1,0 +1,29 @@
+{
+  "id": "528e6991-51bf-4bbf-a2cb-0d189dc2e19e",
+  "name": "AppVersion and DataVersion",
+  "publisher": "That NAV Guy",
+  "version": "5.0.0.0",
+  "brief": "Test AppVersion and DataVersion",
+  "description": "Test AppVersion and DataVersion",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60081,
+      "to": 60090
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
