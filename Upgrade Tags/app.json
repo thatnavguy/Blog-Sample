@@ -1,0 +1,29 @@
+{
+  "id": "ec0e24f1-f370-4ed2-b43d-4c7592e61c7d",
+  "name": "Upgrade Tags",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Upgrade Tags",
+  "description": "Test Upgrade Tags",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60091,
+      "to": 60100
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
