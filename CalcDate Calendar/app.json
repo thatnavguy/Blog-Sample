@@ -1,0 +1,29 @@
+{
+  "id": "9ffc4207-bc2c-47c0-96ba-53bd0fc34544",
+  "name": "CalcDate Using Calendar",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test CalcDate with Calendar",
+  "description": "Test CalcDate with Calendar",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60111,
+      "to": 60119
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "10.0"
+}
