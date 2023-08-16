@@ -1,0 +1,29 @@
+{
+  "id": "b832e780-fbce-4411-87d4-672148900e4e",
+  "name": "Visual Indicator",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Visual Indicator",
+  "description": "Test Visual Indicator",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60111,
+      "to": 60119
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "10.0"
+}
