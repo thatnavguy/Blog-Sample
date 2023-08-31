@@ -1,0 +1,34 @@
+{
+  "id": "930d9c7b-bb6b-4817-9c16-b4e072a3d0ae",
+  "name": "AppSourceCop Breaking Change",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test AppSourceCop Breaking Change",
+  "description": "Test AppSourceCop Breaking Change",
+  "privacyStatement": "https://thatnavguy.com",
+  "contextSensitiveHelpUrl": "https://thatnavguy.com",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000001,
+      "to": 50000010
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "10.0",
+  "features": [
+    "TranslationFile", "NoImplicitWith", "ExcludeGeneratedTranslations"
+  ],
+  "suppressWarnings": ["AS0092"]
+}
