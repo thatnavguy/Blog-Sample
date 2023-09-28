@@ -1,0 +1,29 @@
+{
+  "id": "f6da30a5-b711-40e4-a4e7-61ae37db257c",
+  "name": "Send Invoice Email with Attachments",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Send Invoice Email with Attachments",
+  "description": "Send Invoice Email with Attachments",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60081,
+      "to": 60090
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "10.0"
+}
