@@ -1,0 +1,30 @@
+{
+  "id": "ad452035-ed16-4f26-824f-0e8a8471871c",
+  "name": "Debugging Conditional Breakpoint",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Debugging Conditional Breakpoint",
+  "description": "Test Debugging Conditional Breakpoint",
+  "privacyStatement": "https://thatnavguy.com",
+  "contextSensitiveHelpUrl": "https://thatnavguy.com",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "22.0.0.0",
+  "application": "22.0.0.0",
+  "idRanges": [
+    {
+      "from": 60120,
+      "to": 60129
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "11.0"
+}
