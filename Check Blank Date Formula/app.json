@@ -1,0 +1,29 @@
+{
+  "id": "a0e30ffb-d141-4089-bd9b-9aeb090c27bf",
+  "name": "Blank Date Formula",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Blank Date Formula",
+  "description": "Test Blank Date Formula",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 60211,
+      "to": 60220
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "10.0"
+}
