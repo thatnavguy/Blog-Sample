@@ -1,0 +1,29 @@
+{
+  "id": "23f93da6-6a40-4add-8f08-c1bfde1c34da",
+  "name": "Multiple Approval Administrator",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Allow Multiple Approval Administrator",
+  "description": "Allow Multiple Approval Administrator",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "23.0.0.0",
+  "application": "23.0.0.0",
+  "idRanges": [
+    {
+      "from": 60241,
+      "to": 60250
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "11.0"
+}
