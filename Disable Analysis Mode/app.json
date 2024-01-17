@@ -1,0 +1,29 @@
+{
+  "id": "2a8f9f32-4e87-46cf-9266-5b4833c50627",
+  "name": "Disable Analysis Mode",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Disable Analysis Mode",
+  "description": "Test Disable Analysis Mode",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "23.0.0.0",
+  "application": "23.0.0.0",
+  "idRanges": [
+    {
+      "from": 60231,
+      "to": 60240
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "12.0"
+}
