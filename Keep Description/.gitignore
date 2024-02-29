@@ -1,0 +1,21 @@
+#ignore compilation files
+*.app
+**/rad.json
+*/.vscode/launch.json
+# ignore auto-generated xliff
+*/Translations/*.g.xlf
+
+# ignore temo files
+.alpackages/
+.snapshots/
+.output/
+**/.snapshots/*
+**/.alcache/*
+**/.altemplates/*
+**/.altestrunner/*
+~$*
+cache_*
+
+# ignore other files
+*/BuildOutput.txt
+*.zip

@@ -1,0 +1,29 @@
+{
+  "id": "2a8f9f32-4e87-46cf-9266-5b4833c50627",
+  "name": "Keep Description",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Show Keep Description on General Journals",
+  "description": "Show Keep Description on General Journals",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "23.0.0.0",
+  "application": "23.0.0.0",
+  "idRanges": [
+    {
+      "from": 60271,
+      "to": 60280
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "12.0"
+}
