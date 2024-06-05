@@ -1,0 +1,29 @@
+{
+  "id": "b9856534-859b-4751-853b-d04a4e6f08ab",
+  "name": "Default Sorting",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Default Sorting",
+  "description": "Default Sorting",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "23.0.0.0",
+  "application": "23.0.0.0",
+  "idRanges": [
+    {
+      "from": 60001,
+      "to": 60010
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "12.0"
+}
