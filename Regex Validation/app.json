@@ -1,0 +1,30 @@
+{
+  "id": "f396d546-fb42-421f-bc1f-5a40b770c7e2",
+  "name": "Regex Validation",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Regex Validation",
+  "description": "Regex Validation",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "25.0.0.0",
+  "application": "25.0.0.0",
+  "idRanges": [
+    {
+      "from": 60501,
+      "to": 60510
+    }
+  ],
+  "suppressWarnings": ["AA0218"],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "14.1"
+}
