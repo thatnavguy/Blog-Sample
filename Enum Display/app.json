@@ -1,0 +1,30 @@
+{
+  "id": "603d35d9-dfa5-46bc-8e20-f34d54b32423",
+  "name": "Enum Display",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Enum Display",
+  "description": "Enum Display",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "25.0.0.0",
+  "application": "25.0.0.0",
+  "idRanges": [
+    {
+      "from": 60521,
+      "to": 60530
+    }
+  ],
+  "suppressWarnings": ["AA0218"],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "15.0"
+}
