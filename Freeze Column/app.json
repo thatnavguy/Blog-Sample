@@ -1,0 +1,30 @@
+{
+  "id": "4c9f85c2-ea2e-30c0-8bc9-8f50a30eae10",
+  "name": "Freeze Column",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Freeze Column",
+  "description": "Freeze Column",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "26.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 60081,
+      "to": 60090
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "suppressWarnings": ["AA0218"],
+  "runtime": "15.0"
+}
