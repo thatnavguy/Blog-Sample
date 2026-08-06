@@ -8,8 +8,20 @@ codeunit 60061 Region_TNG
     end;
 
     procedure SalesValidation()
+    var
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
     begin
-        // Sales validation logic
+
+        //Direct
+        SalesLine."Document Type" := SalesHeader."Document Type";
+        SalesLine."Document No." := SalesHeader."No.";
+        SalesLine."Line No." := 1;
+
+        //Validate
+        SalesLine.Validate("Document Type", SalesHeader."Document Type");
+        SalesLine.Validate("Document No.", SalesHeader."No.");
+        SalesLine.Validate("Line No.", 1);
     end;
     #endregion
 
