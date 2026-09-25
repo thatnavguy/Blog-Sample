@@ -1,0 +1,30 @@
+{
+  "id": "850d69d9-7529-491a-8874-e320682ed8de",
+  "name": "Excel Buffer value",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Excel Buffer value",
+  "description": "Test Excel Buffer value",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "28.0.0.0",
+  "application": "28.0.0.0",
+  "idRanges": [
+    {
+      "from": 60211,
+      "to": 60219
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "suppressWarnings": ["AA0247"],
+  "runtime": "16.0"
+}
