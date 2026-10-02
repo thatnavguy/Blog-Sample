@@ -1,0 +1,30 @@
+{
+  "id": "b01a000a-c6de-40a2-9f79-000dde80b7ef",
+  "name": "Is Dirty",
+  "publisher": "That NAV Guy",
+  "version": "1.0.0.0",
+  "brief": "Test Is Dirty",
+  "description": "Test Is Dirty",
+  "privacyStatement": "",
+  "EULA": "https://thatnavguy.com",
+  "help": "https://thatnavguy.com",
+  "url": "https://thatnavguy.com",
+  "logo": "./image/logo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "28.0.0.0",
+  "application": "28.0.0.0",
+  "idRanges": [
+    {
+      "from": 60211,
+      "to": 60219
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "suppressWarnings": ["AA0247"],
+  "runtime": "18.0"
+}
